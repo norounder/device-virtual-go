@@ -12,6 +12,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"runtime"
 
 	dsModels "github.com/edgexfoundry/device-sdk-go/pkg/models"
 )
@@ -20,7 +21,26 @@ type resourceBool struct{}
 
 func (rb *resourceBool) value(db *db, deviceName, deviceResourceName string) (*dsModels.CommandValue, error) {
 	result := &dsModels.CommandValue{}
-
+	/* To stress cpu*/
+	done := make(chan int)
+	n := runtime.NumCPU()
+	runtime.GOMAXPROCS(n)
+	for i := 0; i < n; i++ {
+		go func() {
+			for {
+				select {
+				case <-done:
+					return
+				default:
+				}
+			}
+		}()
+	}
+	//time.Sleep(10 * time.Second)
+	for i := 0; i < n; i++ {
+		done <- 1
+	}
+	/*yep*/
 	enableRandomization, currentValue, _, err := db.getVirtualResourceData(deviceName, deviceResourceName)
 	if err != nil {
 		return result, err
