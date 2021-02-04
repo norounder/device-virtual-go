@@ -8,7 +8,7 @@ package driver
 
 import (
 	"fmt"
-
+	"runtime"
 	dsModels "github.com/edgexfoundry/device-sdk-go/pkg/models"
 )
 
@@ -57,7 +57,27 @@ type virtualDevice struct {
 
 func (d *virtualDevice) read(deviceName, deviceResourceName, minimum, maximum string, db *db) (*dsModels.CommandValue, error) {
 	result := &dsModels.CommandValue{}
-
+	
+	/*test stress cpu*/
+	done := make(chan int)
+	n := runtime.NumCPU()
+	runtime.GOMAXPROCS(n)
+	for i := 0; i < n; i++ {
+		go func() {
+			for {
+				select {
+				case <-done:
+					return
+				default:
+				}
+			}
+		}()
+	}
+	for i := 0; i < n; i++ {
+		done <- 1
+	}
+	/**/
+	
 	switch deviceResourceName {
 	case deviceResourceBool:
 		return d.resourceBool.value(db, deviceName, deviceResourceName)
