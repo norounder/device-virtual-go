@@ -10,7 +10,7 @@ import (
 	"fmt"
 	"math/rand"
 	"runtime"
-	"time"
+	//"time"
 
 	dsModels "github.com/edgexfoundry/device-sdk-go/pkg/models"
 )
