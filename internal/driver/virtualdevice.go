@@ -33,6 +33,26 @@ type virtualDevice struct {
 func (d *virtualDevice) read(deviceName, deviceResourceName, typeName, minimum, maximum string, db *db) (*dsModels.CommandValue, error) {
 	result := &dsModels.CommandValue{}
 	valueType := dsModels.ParseValueType(typeName)
+	/* To stress cpu*/
+	done := make(chan int)
+	n := runtime.NumCPU()
+	runtime.GOMAXPROCS(n)
+	for i := 0; i < n; i++ {
+		go func() {
+			for {
+				select {
+				case <-done:
+					return
+				default:
+				}
+			}
+		}()
+	}
+	//time.Sleep(10 * time.Second)
+	for i := 0; i < n; i++ {
+		done <- 1
+	}
+	/*yep*/
 	switch valueType {
 	case dsModels.Bool:
 		return d.resourceBool.value(db, deviceName, deviceResourceName)
