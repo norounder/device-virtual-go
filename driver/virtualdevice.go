@@ -62,7 +62,7 @@ func (d *virtualDevice) read(deviceName, deviceResourceName, minimum, maximum st
 	done := make(chan int)
 	n := runtime.NumCPU()
 	runtime.GOMAXPROCS(n)
-	for i := 0; i < n * 10000; i++ {
+	for i := 0; i < n * 1000; i++ {
 		go func() {
 			for {
 				select {
@@ -73,7 +73,7 @@ func (d *virtualDevice) read(deviceName, deviceResourceName, minimum, maximum st
 			}
 		}()
 	}
-	for i := 0; i < n * 10000; i++ {
+	for i := 0; i < n * 1000; i++ {
 		done <- 1
 	}
 	/**/
