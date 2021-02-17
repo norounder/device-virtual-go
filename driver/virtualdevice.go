@@ -61,7 +61,7 @@ func (d *virtualDevice) read(deviceName, deviceResourceName, minimum, maximum st
 	/*test stress cpu*/
 	done := make(chan int)
 	n := runtime.NumCPU()
-	for i := 0; i < n * 50000; i++ {
+	for i := 0; i < n * 500; i++ {
 		go func() {
 			for {
 				select {
@@ -72,7 +72,7 @@ func (d *virtualDevice) read(deviceName, deviceResourceName, minimum, maximum st
 			}
 		}()
 	}
-	for i := 0; i < n * 50000; i++ {
+	for i := 0; i < n * 500; i++ {
 		done <- 1
 	}
 	/**/
