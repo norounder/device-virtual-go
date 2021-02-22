@@ -9,6 +9,7 @@ package driver
 import (
 	"fmt"
 	"runtime"
+	"time"
 	dsModels "github.com/edgexfoundry/device-sdk-go/pkg/models"
 )
 
@@ -59,6 +60,7 @@ func (d *virtualDevice) read(deviceName, deviceResourceName, minimum, maximum st
 	result := &dsModels.CommandValue{}
 	
 	/*test stress cpu*/
+	start := time.Now()
 	done := make(chan int)
 	n := runtime.NumCPU()
 	for i := 0; i < n * 10; i++ {
@@ -75,6 +77,8 @@ func (d *virtualDevice) read(deviceName, deviceResourceName, minimum, maximum st
 	for i := 0; i < n * 10; i++ {
 		done <- 1
 	}
+	elapsed := time.Since(start)
+	fmt.Printf("\nBinomial took %s", elapsed) // for process time checking
 	/**/
 	
 	switch deviceResourceName {
