@@ -5,6 +5,7 @@ import (
 	"math/rand"
 	"strconv"
 	"time"
+	"os"
 
 	dsModels "github.com/edgexfoundry/device-sdk-go/pkg/models"
 )
@@ -13,7 +14,13 @@ type resourceBool struct{}
 
 func (rb *resourceBool) value(db *db, deviceName, deviceResourceName string) (*dsModels.CommandValue, error) {
 	result := &dsModels.CommandValue{}
-
+	/*to get hostname to verify which pod they use*/
+	name, err := os.Hostname()
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("hostname", name)
+	/**/
 	enableRandomization, currentValue, _, err := db.getVirtualResourceData(deviceName, deviceResourceName)
 	if err != nil {
 		return result, err
