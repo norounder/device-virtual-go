@@ -82,6 +82,7 @@ func (d *virtualDevice) read(deviceName, deviceResourceName, minimum, maximum st
 		done <- 1
 	}*/
 	elapsed := time.Since(start)
+	fmt.Printfln("!!!!! %s %s !!!!!", deviceResourceName, deviceNames)
 	fmt.Printf("\nBinomial took %s\n", elapsed) // for process time checking
 	/**/
 	
