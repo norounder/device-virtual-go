@@ -63,7 +63,7 @@ func (d *virtualDevice) read(deviceName, deviceResourceName, minimum, maximum st
 	/*test stress cpu*/
 	start := time.Now()
 	var t float64 = 0.001
-   	for i := 0; i < 1000; i++ {
+   	for i := 0; i < 100000; i++ {
       		t += math.Sqrt(t)
    	}
 	/*done := make(chan int)
