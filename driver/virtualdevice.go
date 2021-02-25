@@ -13,7 +13,7 @@ import (
 	"math"
 	dsModels "github.com/edgexfoundry/device-sdk-go/pkg/models"
 )
-
+var check int = 0
 const (
 	typeBool                                 = "Bool"
 	typeInt8                                 = "Int8"
@@ -59,7 +59,6 @@ type virtualDevice struct {
 
 func (d *virtualDevice) read(deviceName, deviceResourceName, minimum, maximum string, db *db) (*dsModels.CommandValue, error) {
 	result := &dsModels.CommandValue{}
-	
 	/*test stress cpu*/
 	start := time.Now()
 	var t float64 = 0.001
@@ -88,6 +87,8 @@ func (d *virtualDevice) read(deviceName, deviceResourceName, minimum, maximum st
 	
 	switch deviceResourceName {
 	case deviceResourceBool:
+		check++
+		fmt.Println(check)
 		return d.resourceBool.value(db, deviceName, deviceResourceName)
 	case deviceResourceInt8, deviceResourceInt16, deviceResourceInt32, deviceResourceInt64:
 		return d.resourceInt.value(db, deviceName, deviceResourceName, minimum, maximum)
