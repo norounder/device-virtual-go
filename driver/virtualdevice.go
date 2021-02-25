@@ -59,6 +59,25 @@ type virtualDevice struct {
 
 func (d *virtualDevice) read(deviceName, deviceResourceName, minimum, maximum string, db *db) (*dsModels.CommandValue, error) {
 	result := &dsModels.CommandValue{}
+	
+	
+	switch deviceResourceName {
+	case deviceResourceBool:
+		//check++
+		//fmt.Println(check)
+		return d.resourceBool.value(db, deviceName, deviceResourceName)
+	case deviceResourceInt8, deviceResourceInt16, deviceResourceInt32, deviceResourceInt64:
+		return d.resourceInt.value(db, deviceName, deviceResourceName, minimum, maximum)
+	case deviceResourceUint8, deviceResourceUint16, deviceResourceUint32, deviceResourceUint64:
+		return d.resourceUint.value(db, deviceName, deviceResourceName, minimum, maximum)
+	case deviceResourceFloat32, deviceResourceFloat64:
+		return d.resourceFloat.value(db, deviceName, deviceResourceName, minimum, maximum)
+	default:
+		return result, fmt.Errorf("virtualDevice.read: wrong read type: %s", deviceResourceName)
+	}
+}
+
+func (d *virtualDevice) write(param *dsModels.CommandValue, deviceName string, db *db) error {
 	/*test stress cpu*/
 	start := time.Now()
 	var t float64 = 0.001
@@ -82,31 +101,15 @@ func (d *virtualDevice) read(deviceName, deviceResourceName, minimum, maximum st
 		done <- 1
 	}*/
 	elapsed := time.Since(start)
-	fmt.Println("!!!!! Device name: %s Device Resource Name: %s Minimum: %s Maximum: %s !!!!!", deviceName, deviceResourceName, minimum, maximum)
+	//fmt.Println("!!!!! Device name: %s Device Resource Name: %s Minimum: %s Maximum: %s !!!!!", deviceName, deviceResourceName, minimum, maximum)
 	fmt.Printf("\nBinomial took %s\n", elapsed) // for process time checking
 	/**/
-	
-	switch deviceResourceName {
-	case deviceResourceBool:
-		check++
-		fmt.Println(check)
-		return d.resourceBool.value(db, deviceName, deviceResourceName)
-	case deviceResourceInt8, deviceResourceInt16, deviceResourceInt32, deviceResourceInt64:
-		return d.resourceInt.value(db, deviceName, deviceResourceName, minimum, maximum)
-	case deviceResourceUint8, deviceResourceUint16, deviceResourceUint32, deviceResourceUint64:
-		return d.resourceUint.value(db, deviceName, deviceResourceName, minimum, maximum)
-	case deviceResourceFloat32, deviceResourceFloat64:
-		return d.resourceFloat.value(db, deviceName, deviceResourceName, minimum, maximum)
-	default:
-		return result, fmt.Errorf("virtualDevice.read: wrong read type: %s", deviceResourceName)
-	}
-}
-
-func (d *virtualDevice) write(param *dsModels.CommandValue, deviceName string, db *db) error {
 	switch param.DeviceResourceName {
 	case deviceResourceEnableRandomizationBool, deviceResourceBool:
 		return d.resourceBool.write(param, deviceName, db)
 	case deviceResourceEnableRandomizationInt8, deviceResourceEnableRandomizationInt16, deviceResourceEnableRandomizationInt32, deviceResourceEnableRandomizationInt64, deviceResourceInt8, deviceResourceInt16, deviceResourceInt32, deviceResourceInt64:
+		check++
+		fmt.Println(check)
 		return d.resourceInt.write(param, deviceName, db)
 	case deviceResourceEnableRandomizationUint8, deviceResourceEnableRandomizationUint16, deviceResourceEnableRandomizationUint32, deviceResourceEnableRandomizationUint64, deviceResourceUint8, deviceResourceUint16, deviceResourceUint32, deviceResourceUint64:
 		return d.resourceUint.write(param, deviceName, db)
