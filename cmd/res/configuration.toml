@@ -1,5 +1,5 @@
 [Service]
-Host = "localhost"
+Host = "edgex-device-virtual"
 Port = 49990
 ConnectRetries = 3
 Labels = []
@@ -10,7 +10,7 @@ AsyncBufferSize = 16
 
 [Registry]
 Type = "consul"
-Host = "localhost"
+Host = "edgex-core-consul"
 Port = 8500
 CheckInterval = "10s"
 FailLimit = 3
@@ -27,21 +27,21 @@ LogLevel = 'INFO'
   [Clients.Data]
   Name = "edgex-core-data"
   Protocol = "http"
-  Host = "localhost"
+  Host = "edgex-core-data"
   Port = 48080
   Timeout = 5000
 
   [Clients.Metadata]
   Name = "edgex-core-metadata"
   Protocol = "http"
-  Host = "localhost"
+  Host = "edgex-core-metadata"
   Port = 48081
   Timeout = 5000
 
   [Clients.Logging]
   Name = "edgex-support-logging"
   Protocol = "http"
-  Host = "localhost"
+  Host = "edgex-support-logging"
   Port = 48061
 
 [Device]
@@ -64,10 +64,6 @@ LogLevel = 'INFO'
     [DeviceList.Protocols.other]
       Address = "device-virtual-bool-01"
       Port = "300"
-  [[DeviceList.AutoEvents]]
-    Frequency = "10s"
-    OnChange = false
-    Resource = "RandomValue_Bool"
 [[DeviceList]]
   Name = "Random-Integer-Device"
   Profile = "Random-Integer-Device"
@@ -77,22 +73,6 @@ LogLevel = 'INFO'
     [DeviceList.Protocols.other]
       Address = "device-virtual-int-01"
       Protocol = "300"
-  [[DeviceList.AutoEvents]]
-    Frequency = "15s"
-    OnChange = false
-    Resource = "RandomValue_Int8"
-  [[DeviceList.AutoEvents]]
-    Frequency = "15s"
-    OnChange = false
-    Resource = "RandomValue_Int16"
-  [[DeviceList.AutoEvents]]
-    Frequency = "15s"
-    OnChange = false
-    Resource = "RandomValue_Int32"
-  [[DeviceList.AutoEvents]]
-    Frequency = "15s"
-    OnChange = false
-    Resource = "RandomValue_Int64"
 [[DeviceList]]
   Name = "Random-UnsignedInteger-Device"
   Profile = "Random-UnsignedInteger-Device"
@@ -102,22 +82,6 @@ LogLevel = 'INFO'
     [DeviceList.Protocols.other]
       Address = "device-virtual-uint-01"
       Protocol = "300"
-  [[DeviceList.AutoEvents]]
-    Frequency = "20s"
-    OnChange = false
-    Resource = "RandomValue_Uint8"
-  [[DeviceList.AutoEvents]]
-    Frequency = "20s"
-    OnChange = false
-    Resource = "RandomValue_Uint16"
-  [[DeviceList.AutoEvents]]
-    Frequency = "20s"
-    OnChange = false
-    Resource = "RandomValue_Uint32"
-  [[DeviceList.AutoEvents]]
-    Frequency = "20s"
-    OnChange = false
-    Resource = "RandomValue_Uint64"
 [[DeviceList]]
   Name = "Random-Float-Device"
   Profile = "Random-Float-Device"
@@ -127,11 +91,3 @@ LogLevel = 'INFO'
     [DeviceList.Protocols.other]
       Address = "device-virtual-float-01"
       Protocol = "300"
-  [[DeviceList.AutoEvents]]
-    Frequency = "30s"
-    OnChange = false
-    Resource = "RandomValue_Float32"
-  [[DeviceList.AutoEvents]]
-    Frequency = "30s"
-    OnChange = false
-    Resource = "RandomValue_Float64"
