@@ -21,7 +21,7 @@ EnableRemote = true
 File = "./device-virtual.log"
 
 [Writable]
-LogLevel = 'DEBUG'
+LogLevel = 'ERROR'
 
 [Clients]
   [Clients.Data]
