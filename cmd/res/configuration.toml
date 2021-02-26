@@ -1,5 +1,5 @@
 [Service]
-Host = "edgex-device-virtual"
+Host = "10.96.222.222"
 Port = 49990
 ConnectRetries = 3
 Labels = []
