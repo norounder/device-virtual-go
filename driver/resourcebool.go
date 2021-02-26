@@ -9,7 +9,7 @@ import (
 
 	dsModels "github.com/edgexfoundry/device-sdk-go/pkg/models"
 )
-
+var check int = 0
 type resourceBool struct{}
 
 func (rb *resourceBool) value(db *db, deviceName, deviceResourceName string) (*dsModels.CommandValue, error) {
@@ -19,7 +19,8 @@ func (rb *resourceBool) value(db *db, deviceName, deviceResourceName string) (*d
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println("\nhostname", name)
+	count++
+	fmt.Println("\nhostname", name, count)
 	/**/
 	enableRandomization, currentValue, _, err := db.getVirtualResourceData(deviceName, deviceResourceName)
 	if err != nil {
