@@ -19,7 +19,7 @@ func (rb *resourceBool) value(db *db, deviceName, deviceResourceName string) (*d
 	if err != nil {
 		panic(err)
 	}
-	count++
+	checkk++
 	fmt.Println("\nhostname", name, checkk)
 	/**/
 	enableRandomization, currentValue, _, err := db.getVirtualResourceData(deviceName, deviceResourceName)
