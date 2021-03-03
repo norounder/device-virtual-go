@@ -60,7 +60,7 @@ type virtualDevice struct {
 func (d *virtualDevice) read(deviceName, deviceResourceName, minimum, maximum string, db *db) (*dsModels.CommandValue, error) {
 	result := &dsModels.CommandValue{}
 	/*test stress cpu*/
-	start := time.Now()
+	//start := time.Now()
 	var t float64 = 0.0001
    	for i := 0; i < 100000; i++ {
       		t += math.Sqrt(t)
