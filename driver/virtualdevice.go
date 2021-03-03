@@ -9,7 +9,7 @@ package driver
 import (
 	"fmt"
 	"runtime"
-	"time"
+	//"time"
 	"math"
 	dsModels "github.com/edgexfoundry/device-sdk-go/pkg/models"
 )
